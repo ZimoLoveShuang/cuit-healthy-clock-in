@@ -9,6 +9,8 @@ password = ''
 key = ''
 
 
+# 修改提交的表单请看288行data
+
 def cookieJarToStr(cookieJar):
     cookieDict = requests.utils.dict_from_cookiejar(cookieJar)
     res = ''
@@ -283,12 +285,12 @@ def clockIn(cookies, id):
     requests.get(url='http://jszx-jxpt.cuit.edu.cn/Jxgl/Xs/netks/' + res.headers['location'], headers=headers,
                  allow_redirects=False)
 
-    data = {'RsNum': '4', 'Id': '11669', 'Tx': '33_1', 'canTj': '1', 'isNeedAns': '0', 'UTp': 'Xs',
-            'ObjId': '3200607035', 'th_1': '21650',
+    data = {'RsNum': '4', 'Id': id, 'Tx': '33_1', 'canTj': '1', 'isNeedAns': '0', 'UTp': 'Xs',
+            'ObjId': username, 'th_1': '21650',
             'wtOR_1': '1%5C%7C%2F%5C%7C%2F%5C%7C%2F%5C%7C%2F1%5C%7C%2F1%5C%7C%2F1%5C%7C%2F1%5C%7C%2F1%5C%7C%2F',
             'sF21650_1': '1', 'sF21650_2': '', 'sF21650_3': '', 'sF21650_4': '', 'sF21650_5': '1', 'sF21650_6': '1',
             'sF21650_7': '1', 'sF21650_8': '1', 'sF21650_9': '1', 'sF21650_10': '', 'sF21650_N': '10', 'th_2': '21912',
-            'wtOR_2': '', 'sF21912_1': '%B3%C9%B6%BC%CA%D0%BD%F0%C5%A3%C7%F8', 'sF21912_2': '%BB%D8%BC%D2',
+            'wtOR_2': '', 'sF21912_1': '成都市金牛区', 'sF21912_2': '回家',
             'sF21912_3': '1', 'sF21912_4': '06', 'sF21912_5': '1', 'sF21912_6': '23', 'sF21912_N': '6', 'th_3': '21648',
             'wtOR_3': 'N%5C%7C%2F%5C%7C%2FN%5C%7C%2F%5C%7C%2FN%5C%7C%2F', 'sF21648_1': 'N', 'sF21648_2': '',
             'sF21648_3': 'N', 'sF21648_4': '', 'sF21648_5': 'N', 'sF21648_6': '', 'sF21648_N': '6', 'th_4': '21649',
