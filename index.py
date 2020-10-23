@@ -5,15 +5,15 @@ import requests
 username = ''
 # 密码
 password = ''
-# server酱key，官方地址http://sc.ftqq.com/3.version
+# server酱key，官方地址http://sc.ftqq.com/3.version，不写不会推送通知
 key = ''
+
+# 下面两项同时写就默认提交请假的打卡，不写就默认提交不请假的打卡
 # 目的地
 destination = ''
 # 请假理由
 reason = ''
 
-
-# 修改提交的表单请看288行data
 
 def cookieJarToStr(cookieJar):
     cookieDict = requests.utils.dict_from_cookiejar(cookieJar)
@@ -289,18 +289,101 @@ def clockIn(cookies, id):
     requests.get(url='http://jszx-jxpt.cuit.edu.cn/Jxgl/Xs/netks/' + res.headers['location'], headers=headers,
                  allow_redirects=False)
 
-    data = {'RsNum': '4', 'Id': id, 'Tx': '33_1', 'canTj': '1', 'isNeedAns': '0', 'UTp': 'Xs',
-            'ObjId': username, 'th_1': '21650',
+    if len(destination) > 1 and len(reason) > 1:
+        data = {
+            'RsNum': '4',
+            'Id': id,
+            'Tx': '33_1',
+            'canTj': '1',
+            'isNeedAns': '0',
+            'UTp': 'Xs',
+            'ObjId': username,
+            'th_1': '21650',
             'wtOR_1': '1%5C%7C%2F%5C%7C%2F%5C%7C%2F%5C%7C%2F1%5C%7C%2F1%5C%7C%2F1%5C%7C%2F1%5C%7C%2F1%5C%7C%2F',
-            'sF21650_1': '1', 'sF21650_2': '', 'sF21650_3': '', 'sF21650_4': '', 'sF21650_5': '1', 'sF21650_6': '1',
-            'sF21650_7': '1', 'sF21650_8': '1', 'sF21650_9': '1', 'sF21650_10': '', 'sF21650_N': '10', 'th_2': '21912',
-            'wtOR_2': '', 'sF21912_1': destination.encode('gbk'), 'sF21912_2': reason.encode('gbk'),
-            'sF21912_3': '1', 'sF21912_4': '06', 'sF21912_5': '1', 'sF21912_6': '23', 'sF21912_N': '6', 'th_3': '21648',
-            'wtOR_3': 'N%5C%7C%2F%5C%7C%2FN%5C%7C%2F%5C%7C%2FN%5C%7C%2F', 'sF21648_1': 'N', 'sF21648_2': '',
-            'sF21648_3': 'N', 'sF21648_4': '', 'sF21648_5': 'N', 'sF21648_6': '', 'sF21648_N': '6', 'th_4': '21649',
-            'wtOR_4': '%5C%7C%2F%5C%7C%2F%5C%7C%2F', 'sF21649_1': '', 'sF21649_2': '', 'sF21649_3': '', 'sF21649_4': '',
-            'sF21649_N': '4', 'zw1': '', 'cxStYt': 'A', 'zw2': '', 'B2': '%CC%E1%BD%BB%B4%F2%BF%A8'}
-
+            'sF21650_1': '1',
+            'sF21650_2': '',
+            'sF21650_3': '',
+            'sF21650_4': '',
+            'sF21650_5': '1',
+            'sF21650_6': '1',
+            'sF21650_7': '1',
+            'sF21650_8': '1',
+            'sF21650_9': '1',
+            'sF21650_10': '',
+            'sF21650_N': '10',
+            'th_2': '21912',
+            'wtOR_2': '',
+            'sF21912_1': destination.encode('gbk'),
+            'sF21912_2': reason.encode('gbk'),
+            'sF21912_3': '1',
+            'sF21912_4': '06',
+            'sF21912_5': '1',
+            'sF21912_6': '23',
+            'sF21912_N': '6',
+            'th_3': '21648',
+            'wtOR_3': 'N%5C%7C%2F%5C%7C%2FN%5C%7C%2F%5C%7C%2FN%5C%7C%2F',
+            'sF21648_1': 'N',
+            'sF21648_2': '',
+            'sF21648_3': 'N',
+            'sF21648_4': '',
+            'sF21648_5': 'N',
+            'sF21648_6': '',
+            'sF21648_N': '6',
+            'th_4': '21649',
+            'wtOR_4': '%5C%7C%2F%5C%7C%2F%5C%7C%2F',
+            'sF21649_1': '',
+            'sF21649_2': '',
+            'sF21649_3': '',
+            'sF21649_4': '',
+            'sF21649_N': '4',
+            'zw1': '',
+            'cxStYt': 'A',
+            'zw2': '',
+            'B2': '%CC%E1%BD%BB%B4%F2%BF%A8'
+        }
+    else:
+        data = {
+            'RsNum': '3',
+            'Id': id,
+            'Tx': '33_1',
+            'canTj': '1',
+            'isNeedAns': '0',
+            'UTp': 'Xs',
+            'ObjId': username,
+            'th_1': '21648',
+            'wtOR_1': 'N%5C%7C%2F%5C%7C%2FN%5C%7C%2F%5C%7C%2FN%5C%7C%2F',
+            'sF21648_1': 'N',
+            'sF21648_2': '',
+            'sF21648_3': 'N',
+            'sF21648_4': '',
+            'sF21648_5': 'N',
+            'sF21648_6': '',
+            'sF21648_N': '6',
+            'th_2': '21649',
+            'wtOR_2': '%5C%7C%2F%5C%7C%2F%5C%7C%2F',
+            'sF21649_1': '',
+            'sF21649_2': '',
+            'sF21649_3': '',
+            'sF21649_4': '',
+            'sF21649_N': '4',
+            'th_3': '21650',
+            'wtOR_3': '1%5C%7C%2F%5C%7C%2F%5C%7C%2F%5C%7C%2F1%5C%7C%2F%5C%7C%2F%5C%7C%2F%5C%7C%2F%5C%7C%2F',
+            'sF21650_1': '1',
+            'sF21650_2': '',
+            'sF21650_3': '',
+            'sF21650_4': '',
+            'sF21650_5': '1',
+            'sF21650_6': '1',
+            'sF21650_7': '1',
+            'sF21650_8': '1',
+            'sF21650_9': '1',
+            'sF21650_10': '',
+            'sF21650_N': '10',
+            'zw1': '',
+            'cxStYt': 'A',
+            'zw2': '',
+            'B2': '%CC%E1%BD%BB%B4%F2%BF%A8'
+        }
     headers = {
         'Host': 'jszx-jxpt.cuit.edu.cn',
         'Connection': 'keep-alive',
