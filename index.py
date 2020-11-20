@@ -1,5 +1,7 @@
 import re
 import requests
+import calendar
+import datetime
 
 # 学号
 username = ''
@@ -8,11 +10,15 @@ password = ''
 # server酱key，官方地址http://sc.ftqq.com/3.version，不写不会推送通知
 key = ''
 
-# 下面两项同时写就默认提交请假的打卡，不写就默认提交不请假的打卡
+# 是否开启请假，此项设置为True前，必须填写目的地和请假理由，否则不生效
+isLeave = False
 # 目的地
 destination = ''
 # 请假理由
 reason = ''
+
+# 是否开启周五自动请假，默认请三天，此项设置为True前，必须填写目的地和请假理由，否则无效
+isFridayAutoLeave = False
 
 
 def cookieJarToStr(cookieJar):
@@ -289,7 +295,7 @@ def clockIn(cookies, id):
     requests.get(url='http://jszx-jxpt.cuit.edu.cn/Jxgl/Xs/netks/' + res.headers['location'], headers=headers,
                  allow_redirects=False)
 
-    if len(destination) > 1 and len(reason) > 1:
+    if isLeave and len(destination) > 1 and len(reason) > 1:
         data = {
             'RsNum': '4',
             'Id': id,
@@ -384,6 +390,10 @@ def clockIn(cookies, id):
             'zw2': '',
             'B2': '%CC%E1%BD%BB%B4%F2%BF%A8'
         }
+    if isFridayAutoLeave:
+        today = datetime.datetime.today()
+        if calendar.weekday(today.year, today.month, today.day) == 4:
+            data['sF21912_5'] = '3'
     headers = {
         'Host': 'jszx-jxpt.cuit.edu.cn',
         'Connection': 'keep-alive',
