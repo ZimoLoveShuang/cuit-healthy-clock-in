@@ -444,6 +444,7 @@ def clockIn(cookies, id):
                 'zw2': '',
                 'B2': '%CC%E1%BD%BB%B4%F2%BF%A8'
             }
+    print(data)
     headers = {
         'Host': 'jszx-jxpt.cuit.edu.cn',
         'Connection': 'keep-alive',
